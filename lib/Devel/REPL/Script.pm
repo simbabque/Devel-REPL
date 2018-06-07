@@ -67,10 +67,10 @@ sub apply_script {
     return;
   }
 
-  open RCFILE, '<', $script or die "Couldn't open ${script}: $!";
+  open my $fh, '<', $script or die "Couldn't open ${script}: $!";
   my $rc_data;
-  { local $/; $rc_data = <RCFILE>; }
-  close RCFILE; # Don't care if this fails
+  { local $/; $rc_data = <$fh>; }
+  close $fh; # Don't care if this fails
   $self->eval_script($rc_data);
   warn "Error executing script ${script}: $@\n" if $@;
 }
